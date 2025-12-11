@@ -1,6 +1,3 @@
-make this into tsx
-
-
 import { useState } from 'react';
 import { verifyCertificate } from '@/services/api';
 import { CertificateAnalysisResponse } from '@/types';
