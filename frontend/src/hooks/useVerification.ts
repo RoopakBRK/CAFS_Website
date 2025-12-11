@@ -1,5 +1,7 @@
+'use client';
+
 import { useState } from 'react';
-import { verifyCertificate } from '@/services/api';
+import { verificationService } from '@/services/api';
 import { CertificateAnalysisResponse } from '@/types';
 
 export function useVerification() {
@@ -11,16 +13,21 @@ export function useVerification() {
     setError(null);
 
     try {
-      const result = await verifyCertificate(file);
+      const result = await verificationService.uploadCertificate(file);
       return result;
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Verification failed';
       setError(errorMessage);
+      console.error('Verification error:', err);
       return null;
     } finally {
       setIsLoading(false);
     }
   };
 
-  return { verify, isLoading, error };
+  const clearError = () => {
+    setError(null);
+  };
+
+  return { verify, isLoading, error, clearError };
 }
